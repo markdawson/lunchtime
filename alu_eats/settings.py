@@ -22,7 +22,7 @@ def get_env_variable(var_name):
     except KeyError:
         error_msg = "Set the %s environment varaible" % var_name
         raise 
-        
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'account',
 ]
 
 MIDDLEWARE_CLASSES = [
