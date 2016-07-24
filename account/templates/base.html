@@ -11,11 +11,11 @@
 		<span class="logo">ALU Eats</span>
 		{% if request.user.is_authenticated %}
 		<ul class="menu">
-			<li {% if section == "dashboard" %}class="selected"{% endif %}>
-				<a href="{% url "dashboard" %}">My dashboard</a>
+			<li {% if section == "meny" %}class="selected"{% endif %}>
+				<a href="{% url "menu:menu_list" %}">Menu</a>
 			</li>
 			<li {% if section == "images" %}class="selected"{% endif %}>
-				<a href="#">Image</a>
+				<a href="#">Past Orders</a>
 			</li>
 			<li {% if section == "people" %}class="selected"{% endif %}>
 				<a href="#">People</a>
