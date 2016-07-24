@@ -20,13 +20,14 @@
 		</ul>
 	</div>
 	<div id="main" class="product-list">
-		<h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+		<h1>{% if category %}{{ category.name }}{% else %}All{% endif %}</h1>
 		{% for menu_item in menu_items %}
 			<div class="item">
 				{{ menu_item.name }}
-				<br>
+				            
 				Rs {{ menu_item.price }}
 			</div>
+			<br>
 		{% endfor %}
 	</div>
 {% endblock %}

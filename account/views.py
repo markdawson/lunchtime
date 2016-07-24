@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm
 from django.contrib.auth.decorators import login_required
+from menu.views import menu_list
 
 def user_login(request):
 	if request.method == 'POST':
@@ -46,6 +47,7 @@ def register(request):
 
 @login_required
 def dashboard(request):
-	return render(request, 
-		'account/dashboard.html',
-		{'section': 'dashboard'})
+	return menu_list(request)
+	# return render(request, 
+	# 	'account/dashboard.html',
+	# 	{'section': 'dashboard'})
