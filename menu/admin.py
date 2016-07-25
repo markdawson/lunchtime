@@ -8,8 +8,9 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class MenuItemAdmin(admin.ModelAdmin):
-	list_display = ['name', 'price', 'category', 'available']
+	list_display = ['name', 'slug', 'price', 'category', 'available']
 	list_filter = ['available']
 	list_editable = ['price', 'available']
+	prepopulated_fields = {'slug': ('name',)}
 
 admin.site.register(MenuItem, MenuItemAdmin)

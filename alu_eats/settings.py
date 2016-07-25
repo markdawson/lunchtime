@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'menu',
+    'orders',
 ]
 
 MIDDLEWARE_CLASSES = [

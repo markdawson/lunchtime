@@ -17,10 +17,11 @@ class Category(models.Model):
 		return reverse('menu:menu_list_by_category', args=[self.slug])
 
 class MenuItem(models.Model):
+	name = models.CharField(max_length=200, db_index=True)
+	slug = models.SlugField(max_length=200, db_index=True, unique=True)
 	category = models.ForeignKey(Category,
 						related_name='menu_items')
-	name = models.CharField(max_length=200, db_index=True)
-	price = models.IntegerField()
+	price = models.PositiveIntegerField()
 	available = models.BooleanField(default = True)
 
 	class Meta:
@@ -28,3 +29,6 @@ class MenuItem(models.Model):
 
 	def __str__(self):
 		return self.name
+
+	def get_absolute_url(self):
+		return reverse('menu:menu_detail', args=[self.id, self.slug])
