@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+	All Staff Orders
+{% endblock %}
+
+{% block content %}
+	<h1>All Staff Orders</h1>
+	{% if orders %}
+	<table class="cart">
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th>Full Name</th>
+				<th>Menu Item</th>
+				<th>Date</th>
+				<th>Quantity</th>
+				<th>Remove</th>
+				<th>Unit price</th>
+				<th>Total Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for order in orders %}
+				{% with menu_item=order.menu_item %}
+				<tr>
+					<td>
+						{{ order.user }}
+					</td>
+					<td>
+						{{ order.user.first_name }} {{ order.user.last_name }}
+					</td>
+					<td>
+						<a href="{{ menu_item.get_absolute_url }}">
+							{{ menu_item.name }}
+						</a>
+					</td>
+					<td>
+						{{ order.date }}
+					</td>
+					<td>
+						{{ order.quantity }}
+					</td>
+					<td>
+						<a href="{% url "orders:order_remove_all_staff_list" order.id %}">Remove</a>
+					</td>
+					<td class="num">RS {{ order.price }}</td>
+					<td class="num">RS {{ order.total_price }}</td>
+				</tr>
+				{% endwith %}
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<p>There are no orders in the system.</p>
+	{% endif %}
+
+{% endblock %}

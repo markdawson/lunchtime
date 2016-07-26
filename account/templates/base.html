@@ -14,12 +14,17 @@
 			<li {% if section == "menu" %}class="selected"{% endif %}>
 				<a href="{% url "menu:menu_list" %}">Menu</a>
 			</li>
-			<li {% if section == "images" %}class="selected"{% endif %}>
+			<li {% if section == "upcoming_orders" %}class="selected"{% endif %}>
 				<a href="{% url "orders:upcoming_orders" %}">Upcoming Orders</a>
 			</li>
-			<li {% if section == "people" %}class="selected"{% endif %}>
+			<li {% if section == "past_orders" %}class="selected"{% endif %}>
 				<a href="{% url "orders:past_orders" %}">Past Orders</a>
 			</li>
+			{% if request.user.is_staff %}
+				<li {% if section == "all_staff_orders" %}class="selected"{% endif %}>
+					<a href="{% url "orders:all_staff_orders" %}">All Staff Orders</a>
+				</li>
+			{% endif %}
 		</ul>
 		{% endif %}
 

@@ -10,7 +10,7 @@
 		<h3>Categories</h3>
 		<ul>
 			<li {% if not category %}class="selected"{% endif %}>
-				<a href="{% url "menu:menu_list" %}">All</a>
+				<a href="{% url "menu:menu_list" %}">Full Menu</a>
 			</li>
 		{% for c in categories %}
 			<li {% if category.slug == c.slug %}class="selected"{% endif %}>
@@ -20,17 +20,17 @@
 		</ul>
 	</div>
 	<div id="main" class="product-list">
-		<h1>{% if category %}{{ category.name }}{% else %}All{% endif %}</h1>
-		{% for menu_item in menu_items %}
-			<div class="item">
-				<a href="{{ menu_item.get_absolute_url }}">
-					{{ menu_item.name }}
-				</a>
-				<div class="price">        
-					Rs {{ menu_item.price }}
+			<h1>{% if category %}{{ category.name }}{% else %}Full Menu{% endif %}</h1>
+			{% for menu_item in menu_items %}
+				<div class="item">
+					<a href="{{ menu_item.get_absolute_url }}">
+						{{ menu_item.name }}
+					</a>
+					<div class="price">        
+						Rs {{ menu_item.price }}
+					</div>
 				</div>
-			</div>
-			<br>
-		{% endfor %}
+				<br>
+			{% endfor %}
 	</div>
 {% endblock %}
