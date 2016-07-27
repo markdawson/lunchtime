@@ -8,5 +8,8 @@ urlpatterns = [
 	 name='menu_list_by_category'),
 	url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$',
 	 views.menu_detail,
-	 name="menu_detail")
+	 name="menu_detail"),
+	url(r'^review/add/(?P<menu_item_id>\d+)/$',
+	 views.menu_add_review,
+	 name="menu_add_review"),
 ]

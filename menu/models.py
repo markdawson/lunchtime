@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 class Category(models.Model):
 	name = models.CharField(max_length=200, db_index=True)
@@ -32,3 +33,24 @@ class MenuItem(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('menu:menu_detail', args=[self.id, self.slug])
+
+class MenuItemReview(models.Model):
+	item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	review = models.TextField()
+	created = models.DateTimeField(auto_now_add=True)
+	updated = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		ordering = ('-created',)
+
+	def __str__(self):
+		return 'Review of {} by {}'.format(self.item, self.user)
+
+class MenuItemRating(models.Model):
+	item = models.OneToOneField(MenuItem, on_delete=models.CASCADE)
+	user= models.OneToOneField(User, on_delete=models.CASCADE)
+	rating = models.PositiveIntegerField()
+
+	def __str__(self):
+		return '{} from {}'.format(self.rating, self.user)

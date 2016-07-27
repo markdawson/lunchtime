@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, MenuItem
+from .models import Category, MenuItem, MenuItemReview, MenuItemRating
 
 class CategoryAdmin(admin.ModelAdmin):
 	list_display = ['name', 'slug']
@@ -14,3 +14,6 @@ class MenuItemAdmin(admin.ModelAdmin):
 	prepopulated_fields = {'slug': ('name',)}
 
 admin.site.register(MenuItem, MenuItemAdmin)
+ 
+admin.site.register(MenuItemReview)
+admin.site.register(MenuItemRating)

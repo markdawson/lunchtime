@@ -401,9 +401,9 @@ input[type=date] {
     font-family:helvetica, sans-serif;
 }
 
-a.button, input[value="Add to orders"] {
+a.button, input[type="submit"] {
     color:#fff;
-    background:#5993bb;
+    background:#12c064;
     border-radius:4px;
     padding:10px 20px;
     font-size:14px;

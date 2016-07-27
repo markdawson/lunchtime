@@ -7,16 +7,29 @@
 
 {% block content %}
 	<div class="product-detail">
-		<h1>{{ menu_item.name }}</h1>
 		<h2><a href="{{ menu_item.category.get_absolute_url }}">
 			{{ menu_item.category }}</a>
-		</h2>
+		<h1>{{ menu_item.name }}</h1>
+		<h3>Rated {{ menu_item.get_rating }} of 5 based on {{ ratings.count}} ratings{{ MenuItemRatings|pluralize }} </h3> 
 		<p class="price">RS {{ menu_item.price }}</p>
 		<form action="{% url "orders:order_add" menu_item.id %}" method="post">
 			{{ menu_item_form }}
 			{% csrf_token %}
 			<input type="submit" value="Add to orders">
 		</form>
-		<p> Reviews............... </p>
+		<form action="." method="post">
+			{{ rating_form }}
+			{% csrf_token %}
+			<input type="submit" value="Add rating">
+		</form>
+		<h4>Reviews</h4>
+		{% for review in reviews %}
+			<p>{{ review.review }}</p>
+		{% endfor %}
+		<form action="{% url "menu:menu_add_review" menu_item.id %}" method="post">
+			{{ review_form }}
+			{% csrf_token %}
+			<input type="submit" value="Add review">
+		</form>
 	</div>
 {% endblock %}

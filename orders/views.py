@@ -19,9 +19,9 @@ def order_add(request, menu_item_id):
 								menu_item=item,
 								price=item.price,
 								quantity=cd['quantity'],
-								date=date)
+								date=date,
+								comments=cd['comments'])
 		new_order.save()
-		print('item created')
 		return redirect('orders:upcoming_orders')
 	else:
 		return render(request,'menu/menu_detail.html',

@@ -16,6 +16,7 @@
 				<th>Menu Item</th>
 				<th>Date</th>
 				<th>Quantity</th>
+				<th>Comments</th>
 				<th>Remove</th>
 				<th>Unit price</th>
 				<th>Total Price</th>
@@ -41,6 +42,9 @@
 					</td>
 					<td>
 						{{ order.quantity }}
+					</td>
+					<td>
+						{{ order.comments }}
 					</td>
 					<td>
 						<a href="{% url "orders:order_remove_all_staff_list" order.id %}">Remove</a>

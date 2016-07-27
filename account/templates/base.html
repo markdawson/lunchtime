@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div id="header">
-		<span class="logo">ALU Eats</span>
+		<span class="logo"><a href="{% url "menu:menu_list" %}">ALU Eats</a></span>
 		{% if request.user.is_authenticated %}
 		<ul class="menu">
 			<li {% if section == "menu" %}class="selected"{% endif %}>
