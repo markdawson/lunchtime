@@ -12,6 +12,10 @@
 	{% else %}
 	<p>Please, use the following form to log-in:</p>
 	{% endif %}
+	<div class="social">
+			<a href="{% url "social:begin" "google-oauth2" %}">Login with Google</a>
+	</div>
+	<br><br><br>
 	<div class="login-form">
 		<form action="{% url 'login' %}" method="post">
 				<p><label for="id_username">Username or Email:</label><input id="id_username" maxlength="254" name="username" type="text" /></p>
@@ -20,9 +24,6 @@
 			<input type="hidden" name="next" value="{{ next }}"/>
 			<p><input type="submit" value="Log-in"></p>
 		</form>
-		<div class="social"><ul>
-			<li class = "google"><a href="{% url "social:begin" "google-oauth2" %}">Login with Google</a></li>
-		</ul></div>
 		<p><a href="{% url "password_reset" %}">Forgot your password?</a></p>
 		<p>Don't have an account? <a href="{% url "register" %}">Sign up!</a></p>
 	</div>
