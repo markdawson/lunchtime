@@ -8,24 +8,66 @@
 {% block content %}
 	<div class="product-detail">
 		<h2><a href="{{ menu_item.category.get_absolute_url }}">
-			{{ menu_item.category }}</a>
+			{{ menu_item.category }}</a></h2>
 		<h1>{{ menu_item.name }}</h1>
-		<h3>Rated {{ menu_item.get_rating }} of 5 based on {{ ratings.count}} ratings{{ MenuItemRatings|pluralize }} </h3> 
-		<p class="price">RS {{ menu_item.price }}</p>
+		<h2>RS {{ menu_item.price }}</h2>
+		{% if rating %}
+			<h3>Rated {{ menu_item.get_rating }} of 5 based on {{ ratings.count}} ratings{{ MenuItemRatings|pluralize }} </h3> 
+		{% endif %}
+		<!-- <p class="price">RS </p> -->
+
 		<form action="{% url "orders:order_add" menu_item.id %}" method="post">
-			{{ menu_item_form }}
-			{% csrf_token %}
-			<input type="submit" value="Add to orders">
+		<div class="ordering">
+			<table>
+				<thead><tr>
+				{% for field in menu_item_form.visible_fields %}
+					<th> {{ field.label }}</th>
+				{% endfor %}
+					<th> Submit </th>
+				</tr></thead>
+				<tr>
+					{% for field in menu_item_form.visible_fields %}
+						<td>
+							{{ field.errors.as_ul }}
+							{{ field }}
+						</td>
+					{% endfor %}
+						<td>
+							{% csrf_token %}
+							<input type="submit" value="Add to orders">
+						</td>
+				</tr>
+			</table>
+		</div>
 		</form>
-		<form action="." method="post">
-			{{ rating_form }}
-			{% csrf_token %}
-			<input type="submit" value="Add rating">
-		</form>
-		<h4>Reviews</h4>
-		{% for review in reviews %}
-			<p>{{ review.review }}</p>
-		{% endfor %}
+		<br><br>
+		<form action="{% url "menu:menu_add_rating" menu_item.id %}" method="post">
+		<table>
+			<tr>
+				{% for field in rating_form.visible_fields %}
+					<td>
+						{{ field.errors.as_ul }}
+						{{ field }}
+					</td>
+				{% endfor %}
+					<td>
+						{% csrf_token %}
+						<input type="submit" value="Add rating">
+					</td>
+			</tr>
+		</table>
+		</form>			
+		<br><br>
+		{% if reviews %}
+			<h2>Reviews</h2>
+			{% for review in reviews %}
+				<div class="review">
+					<p class="info"> Review {{ forloop.counter }} by {{ review.user.first_name }} {{ review.created}}</p>
+					<p>{{ review.review }}</p>
+				</div>
+			{% endfor %}
+		{% endif %}
+		<br><br>
 		<form action="{% url "menu:menu_add_review" menu_item.id %}" method="post">
 			{{ review_form }}
 			{% csrf_token %}

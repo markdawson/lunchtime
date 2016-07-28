@@ -8,7 +8,7 @@ class OrderAddMenuItemForm(forms.Form):
 										coerce=int) 
 	date = forms.DateField(initial = datetime.date.today(),
 							 widget=forms.TextInput(attrs={'type': 'date'}))
-	comments = forms.CharField(max_length=200, required=False)
+	comments = forms.CharField(max_length=200, required=False, label="Comments for vendor")
 	def clean_date(self):
 		cd = self.cleaned_data
 		if cd['date'] < datetime.date.today():

@@ -48,9 +48,9 @@ class MenuItemReview(models.Model):
 		return 'Review of {} by {}'.format(self.item, self.user)
 
 class MenuItemRating(models.Model):
-	item = models.OneToOneField(MenuItem, on_delete=models.CASCADE)
-	user= models.OneToOneField(User, on_delete=models.CASCADE)
+	item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+	user= models.ForeignKey(User, on_delete=models.CASCADE)
 	rating = models.PositiveIntegerField()
 
 	def __str__(self):
-		return '{} from {}'.format(self.rating, self.user)
+		return '{} from {} on {}'.format(self.rating, self.user, self.item)

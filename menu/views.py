@@ -24,7 +24,14 @@ def menu_detail(request, id, slug):
 									slug=slug,
 									available=True)
 	menu_item_form = OrderAddMenuItemForm()
-	rating_form = RatingForm()
+	try:
+		users_rating = MenuItemRating.objects.get(item=menu_item, user=request.user)
+	except:
+		users_rating = None
+	if users_rating:
+		rating_form = RatingForm(initial={'rating': users_rating})
+	else:
+		rating_form = RatingForm()
 	review_form = ReviewForm()
 	reviews = MenuItemReview.objects.filter(item=menu_item)
 	return render(request,'menu/menu_detail.html',
@@ -56,3 +63,14 @@ def menu_add_review(request, menu_item_id):
 					'rating_form' : rating_form,
 					'review_form': review_form,
 					'reviews' : reviews,})
+
+def menu_add_rating(request, menu_item_id):
+	item = get_object_or_404(MenuItem, id=menu_item_id)
+	rating_form = RatingForm(request.POST)
+	if rating_form.is_valid():
+		cd = rating_form.cleaned_data
+		new_rating = MenuItemRating.objects.create(item=item,
+													user=request.user,
+													rating = cd['rating'])
+		new_rating.save()
+		return redirect('menu:menu_detail', menu_item_id, item.slug)

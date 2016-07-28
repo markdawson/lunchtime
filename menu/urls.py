@@ -12,4 +12,8 @@ urlpatterns = [
 	url(r'^review/add/(?P<menu_item_id>\d+)/$',
 	 views.menu_add_review,
 	 name="menu_add_review"),
+	url(r'^rating/add/(?P<menu_item_id>\d+)/$',
+	 views.menu_add_rating,
+	 name="menu_add_rating"),
+
 ]

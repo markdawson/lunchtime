@@ -4,11 +4,11 @@ from django.contrib.auth.models import User
 
 class OrderItem(models.Model):
 	user = models.ForeignKey(User, related_name='orders')
-	menu_item = models.ForeignKey(MenuItem, related_name='menu_items')
+	menu_item = models.ForeignKey(MenuItem, related_name='menu_items', null=True, on_delete=models.SET_NULL)
 	price = models.PositiveIntegerField()
 	quantity = models.PositiveIntegerField()
 	date = models.DateField()
-	comments = models.CharField(max_length=200, default='')
+	comments = models.CharField(verbose_name='Comments for vendor', max_length=200, default='')
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
 

@@ -8,48 +8,50 @@
 {% block content %}
 	<h1>{{ title_message }}</h1>
 	{% if orders %}
-	<table class="cart">
-		<thead>
-			<tr>
-				<th>Menu Item</th>
-				<th>Date</th>
-				<th>Quantity</th>
-				<th>Comments</th>
-				{% if title_message == 'Upcoming Orders' %} <th>Remove</th>{% endif %}
-				<th>Unit price</th>
-				<th>Price</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for order in orders %}
-				{% with menu_item=order.menu_item %}
+	<div class="orders">
+		<table>
+			<thead>
 				<tr>
-					<td>
-						<a href="{{ menu_item.get_absolute_url }}">
-							{{ menu_item.name }}
-						</a>
-					</td>
-					<td>
-						{{ order.date }}
-					</td>
-					<td>
-						{{ order.quantity }}
-					</td>
-					<td>
-						{{ order.comments }}
-					</td>
-					{% if title_message == 'Upcoming Orders' %}
-						<td>
-							<a href="{% url "orders:order_remove" order.id %}">Remove</a>
-						</td>
-					{% endif %}
-					<td class="num">RS {{ menu_item.price }}</td>
-					<td class="num">RS {{ order.total_price }}</td>
+					<th>Menu Item</th>
+					<th>Date</th>
+					<th>Quantity</th>
+					<th>Comments</th>
+					{% if title_message == 'Upcoming Orders' %} <th>Remove</th>{% endif %}
+					<th>Unit price</th>
+					<th>Price</th>
 				</tr>
-				{% endwith %}
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% for order in orders %}
+					{% with menu_item=order.menu_item %}
+					<tr>
+						<td>
+							<a href="{{ menu_item.get_absolute_url }}">
+								{{ menu_item.name }}
+							</a>
+						</td>
+						<td>
+							{{ order.date }}
+						</td>
+						<td>
+							{{ order.quantity }}
+						</td>
+						<td>
+							{{ order.comments }}
+						</td>
+						{% if title_message == 'Upcoming Orders' %}
+							<td>
+								<a href="{% url "orders:order_remove" order.id %}">Remove</a>
+							</td>
+						{% endif %}
+						<td class="num">RS {{ menu_item.price }}</td>
+						<td class="num">RS {{ order.total_price }}</td>
+					</tr>
+					{% endwith %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 	{% else %}
 	<p>You have no {{ title_message|lower }}.</p>
 	{% endif %}
