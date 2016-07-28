@@ -8,6 +8,35 @@
 {% block content %}
 	<h1>All Staff Orders</h1>
 	{% if orders %}
+		<form method="post">
+			{% if filter_date_form.non_field_errors %}
+				{{ filter_date_form.non_field_errors }}
+				<br><br><br>
+			{% endif %}
+		<div class="ordering">
+			<table>
+				<thead><tr>
+				{% for field in filter_date_form.visible_fields %}
+					<th> {{ field.label }}</th>
+				{% endfor %}
+				</tr></thead>
+				<tr>
+					{% for field in filter_date_form.visible_fields %}
+						<td>
+							{{ field }}
+						</td>
+					{% endfor %}
+						<td>
+							{% csrf_token %}
+							<input class="blue" type="submit" value="Show dates">
+						</td>
+						<td>
+							<input class="blue" type="submit" name="Send email to vendors" value="Send email to vendors">
+						</td>
+				</tr>
+			</table>
+		</div>
+		</form>
 	<div class="orders">
 		<table>
 			<thead>

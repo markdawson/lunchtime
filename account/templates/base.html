@@ -21,7 +21,7 @@
 				<a href="{% url "orders:past_orders" %}">Past Orders</a>
 			</li>
 			{% if request.user.is_staff %}
-				<li {% if section == "all_staff_orders" %}class="selected"{% endif %}>
+				<li>
 					<a href="{% url "orders:all_staff_orders" %}">All Staff Orders</a>
 				</li>
 			{% endif %}

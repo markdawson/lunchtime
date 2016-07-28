@@ -37,7 +37,6 @@ def menu_detail(request, id, slug):
 	if users_rating:
 		rating_form = RatingForm(initial={'rating': users_rating})
 		rating_button_text = 'Change Rating'
-		print('already valued!!')
 	else:
 		rating_form = RatingForm()
 		rating_button_text = 'Add Rating'

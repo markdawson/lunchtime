@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from menu.models import MenuItem
-from .forms import OrderAddMenuItemForm
+from .forms import OrderAddMenuItemForm, FilterDateForm
 from .models import OrderItem
-from django.db.models import Q
+from django.core.mail import send_mail
 from django import forms
 import datetime
+
 
 @require_POST
 def order_add(request, menu_item_id):
@@ -54,4 +55,21 @@ def past_orders(request):
 
 def all_staff_orders(request):
 	orders = OrderItem.objects.all()
-	return render(request, 'orders/all_staff_orders_list.html', {'orders':orders})
+	if request.method =='POST':
+		filter_date_form = FilterDateForm(request.POST)
+		if filter_date_form.is_valid():
+			cd = filter_date_form.cleaned_data
+			orders = OrderItem.objects.filter(date__gte=cd['start_date'], date__lte=cd['end_date'])
+	else:
+		filter_date_form = FilterDateForm()
+	return render(request, 
+		'orders/all_staff_orders_list.html',
+	 	{'orders':orders,
+	 	'filter_date_form': filter_date_form})
+
+def send_email(request):
+	subject = 'Orders for {}'.format('date')
+	message = "All the orders would be right here"
+	to = 'mdawson@alueducation.com'
+	send_mail(subject, message,'alueats@bplunch.alueducation.com', to)
+	sent = True

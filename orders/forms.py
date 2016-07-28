@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django import forms
 import datetime
 
@@ -14,3 +15,24 @@ class OrderAddMenuItemForm(forms.Form):
 		if cd['date'] < datetime.date.today():
 			raise forms.ValidationError("The date cannot be in the past.")
 		return cd['date']
+
+
+class FilterDateForm(forms.Form):
+	start_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+	end_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+
+	def clean(self):
+		if 'Send email to vendors' in self.data:
+			print('Email should be sent...')
+			subject = 'Orders for {}'.format('date')
+			message = "All the orders would be right here"
+			to = ('mdawson@alueducation.com',)
+			send_mail(subject, message,'alueats@bplunch.alueducation.com', to)
+		cleaned_data = super(FilterDateForm, self).clean()
+		start_date = cleaned_data.get("start_date")
+		end_date = cleaned_data.get("end_date")
+		if not (start_date and end_date):
+			raise forms.ValidationError("Hold your horses! Enter in some dates first.")
+		if end_date < start_date:
+			raise forms.ValidationError("Zoicks! The start date needs to be greater than the end date.")
+		
