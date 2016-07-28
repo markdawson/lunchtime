@@ -11,12 +11,13 @@
 			{{ menu_item.category }}</a></h2>
 		<h1>{{ menu_item.name }}</h1>
 		<h2>RS {{ menu_item.price }}</h2>
-		{% if rating %}
-			<h3>Rated {{ menu_item.get_rating }} of 5 based on {{ ratings.count}} ratings{{ MenuItemRatings|pluralize }} </h3> 
+		{% if overall_rating %}
+			<tr>
+			<h3>{{ overall_rating }} of 5 based on {{ rating_count }} rating{{ rating_count|pluralize  }}. </h3> 
 		{% endif %}
-		<!-- <p class="price">RS </p> -->
-
+			<h3>{{ recent_order_count }} order{{ recent_order_count|pluralize }} in the past 7 days. </h3>
 		<form action="{% url "orders:order_add" menu_item.id %}" method="post">
+		<br>
 		<div class="ordering">
 			<table>
 				<thead><tr>
@@ -52,7 +53,7 @@
 				{% endfor %}
 					<td>
 						{% csrf_token %}
-						<input type="submit" value="Add rating">
+						<input type="submit" value="{{ rating_button_text }}">
 					</td>
 			</tr>
 		</table>
