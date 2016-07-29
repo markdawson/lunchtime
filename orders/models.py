@@ -22,3 +22,12 @@ class OrderItem(models.Model):
 
 	def total_price(self):
 		return self.price * self.quantity
+
+class VendorEmail(models.Model):
+	vendor_name = models.CharField(max_length=200)
+	email = models.EmailField()
+	active = models.BooleanField()
+	created = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return self.email

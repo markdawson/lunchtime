@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from menu.models import MenuItem
 from .forms import OrderAddMenuItemForm, FilterDateForm
-from .models import OrderItem
+from .models import OrderItem, VendorEmail
 from django.core.mail import send_mail
+from django.template import Context
+from django.template.loader import get_template
 from django import forms
 import datetime
-
+from django.contrib import messages
 
 @require_POST
 def order_add(request, menu_item_id):
@@ -60,6 +62,8 @@ def all_staff_orders(request):
 		if filter_date_form.is_valid():
 			cd = filter_date_form.cleaned_data
 			orders = OrderItem.objects.filter(date__gte=cd['start_date'], date__lte=cd['end_date'])
+			if filter_date_form.send_email:
+				send_email(request, orders=orders, filter_date_form=filter_date_form, start_date=cd['start_date'], end_date=cd['end_date'])		
 	else:
 		filter_date_form = FilterDateForm()
 	return render(request, 
@@ -67,9 +71,26 @@ def all_staff_orders(request):
 	 	{'orders':orders,
 	 	'filter_date_form': filter_date_form})
 
-def send_email(request):
-	subject = 'Orders for {}'.format('date')
-	message = "All the orders would be right here"
-	to = 'mdawson@alueducation.com'
-	send_mail(subject, message,'alueats@bplunch.alueducation.com', to)
-	sent = True
+def send_email(request, orders, filter_date_form, start_date, end_date):
+	# add subject
+	subject = 'Orders for {}'
+	if start_date == end_date:
+		subject = subject.format(str(start_date))
+	else:
+		subject = subject.format(str(start_date) + ' to ' + str(end_date))
+
+	# render body
+	template = get_template('orders/email_vendors.html')
+	context = Context({'orders':orders,
+	 				'filter_date_form': filter_date_form})
+	html_message = template.render(context)
+
+	# get vendors
+	to = VendorEmail.objects.filter(active='True')
+	send_mail(subject=subject,
+			 message= '',
+			 html_message=html_message,
+			 from_email='alueats@bplunch.alueducation.com',
+			 recipient_list=to)
+
+	messages.success(request, 'Email sent to ' + str([e.email for e in to])[1:-1])

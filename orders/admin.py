@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import OrderItem
+from .models import OrderItem, VendorEmail
 import csv
 import datetime
 from django.http import HttpResponse
@@ -36,3 +36,8 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 admin.site.register(OrderItem, OrderItemAdmin)
 
+class VenderEmailAdmin(admin.ModelAdmin):
+	list_display = ['vendor_name', 'email', 'active', 'created']
+	list_editable = ['active']
+
+admin.site.register(VendorEmail, VenderEmailAdmin)

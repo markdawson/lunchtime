@@ -1,4 +1,3 @@
-from django.core.mail import send_mail
 from django import forms
 import datetime
 
@@ -22,6 +21,7 @@ class FilterDateForm(forms.Form):
 	end_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
 
 	def clean(self):
+		self.send_email = False
 		cleaned_data = super(FilterDateForm, self).clean()
 		start_date = cleaned_data.get("start_date")
 		end_date = cleaned_data.get("end_date")
@@ -30,9 +30,4 @@ class FilterDateForm(forms.Form):
 		if end_date < start_date:
 			raise forms.ValidationError("Zoicks! The start date needs to be greater than the end date.")
 		if 'Send email to vendors' in self.data:
-			print('Email should be sent...')
-			subject = 'Orders for {}'.format('date')
-			message = "All the orders would be right here"
-			to = ('mdawson@alueducation.com',)
-			send_mail(subject, message,'alueats@bplunch.alueducation.com', to)
-		
+			self.send_email = True

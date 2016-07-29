@@ -1,0 +1,30 @@
+<h1>All Staff Orders</h1> {% if orders %} <div class="orders">
+ <table style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+  <thead>
+   <tr>
+    <th style="background: #5993bb; color: #fff; font-size: 14px; font-weight: bold; margin: 0; padding: 10px; text-align: left;">Full Name</th>
+    <th style="background: #5993bb; color: #fff; font-size: 14px; font-weight: bold; margin: 0; padding: 10px; text-align: left;">Menu Item</th>
+    <th style="background: #5993bb; color: #fff; font-size: 14px; font-weight: bold; margin: 0; padding: 10px; text-align: left;">Date</th>
+    <th style="background: #5993bb; color: #fff; font-size: 14px; font-weight: bold; margin: 0; padding: 10px; text-align: left;">Quantity</th>
+    <th style="background: #5993bb; color: #fff; font-size: 14px; font-weight: bold; margin: 0; padding: 10px; text-align: left;">Comments</th>
+    <th style="background: #5993bb; color: #fff; font-size: 14px; font-weight: bold; margin: 0; padding: 10px; text-align: left;">Unit price</th>
+    <th style="background: #5993bb; color: #fff; font-size: 14px; font-weight: bold; margin: 0; padding: 10px; text-align: left;">Total Price</th>
+   </tr>
+  </thead>
+  <tbody> {% for order in orders %} {% with menu_item=order.menu_item %} <tr>
+    <td style="font-size: 14px; margin: 0; padding: 10px; text-align: left;">
+    {% if order.user.first_name or order.user.last_name %}
+     {{ order.user.first_name }} {{ order.user.last_name }} 
+    {% else %}
+     {{ order.user }}
+    {% endif %}
+ 	</td>
+    <td style="font-size: 14px; margin: 0; padding: 10px; text-align: left;"> {{ menu_item.name }} </td>
+    <td style="font-size: 14px; margin: 0; padding: 10px; text-align: left;"> {{ order.date }} </td>
+    <td style="font-size: 14px; margin: 0; padding: 10px; text-align: left;"> {{ order.quantity }} </td>
+    <td style="font-size: 14px; margin: 0; padding: 10px; text-align: left;"> {{ order.comments }} </td>
+    <td class="num" style="font-size: 14px; margin: 0; padding: 10px; text-align: right;">RS {{ order.price }}</td>
+    <td class="num" style="font-size: 14px; margin: 0; padding: 10px; text-align: right;">RS {{ order.total_price }}</td>
+   </tr> {% endwith %} {% endfor %} </tbody>
+ </table>
+</div> {% else %} <p>There are no orders in the system.</p> {% endif %}
