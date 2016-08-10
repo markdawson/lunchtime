@@ -159,6 +159,8 @@ AUTHENTICATION_BACKENDS = (
     'account.authentication.EmailAuthBackend',
 )
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = ['alueducation.com']
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_env_variable('GOOGLE_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_env_variable('GOOGLE_SECRET')
 
