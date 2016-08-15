@@ -33,6 +33,9 @@ SECRET_KEY = get_env_variable('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#Add admins
+ADMINS = [('Mark', 'markdawsondeveloping@gmail.com')]
+
 # Application definition
 
 INSTALLED_APPS = [
