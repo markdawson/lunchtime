@@ -7,6 +7,7 @@
 
 {% block content %}
 	<h1>All Staff Orders</h1>
+    <p>{{now}}</p>
 	{% if orders %}
 		<form method="post">
 			{% if filter_date_form.non_field_errors %}

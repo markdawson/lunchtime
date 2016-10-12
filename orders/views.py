@@ -69,7 +69,8 @@ def all_staff_orders(request):
 	return render(request, 
 		'orders/all_staff_orders_list.html',
 	 	{'orders':orders,
-	 	'filter_date_form': filter_date_form})
+	 	'filter_date_form': filter_date_form,
+	 	'now': datetime.datetime.now()})
 
 def send_email(request, orders, filter_date_form, start_date, end_date):
 	# add subject
