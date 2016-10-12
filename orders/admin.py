@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import OrderItem, VendorEmail
+from django.contrib.auth.models import User
 import csv
 import datetime
 from django.http import HttpResponse
@@ -22,6 +23,8 @@ def export_to_csv(modeladmin, request, queryset):
 			value = getattr(obj, field.name)
 			if isinstance(value, datetime.datetime):
 				value = value.strftime('%d%m%Y')
+			if isinstance(value, User) and value.first_name:
+				value = value.first_name + " " + value.last_name
 			data_row.append(value)
 		writer.writerow(data_row)
 	return response
@@ -47,6 +50,8 @@ def totals_by_user(modeladmin, request, queryset):
 			value = getattr(obj, field.name)
 			if isinstance(value, datetime.datetime):
 				value = value.strftime('%d%m%Y')
+			if isinstance(value, User) and value.first_name:
+				value = value.first_name + " " + value.last_name
 			data_row.append(value)
 		all_orders.append(data_row)
 	# make user sheet
@@ -96,6 +101,8 @@ def totals_by_user_only_totals(modeladmin, request, queryset):
 			value = getattr(obj, field.name)
 			if isinstance(value, datetime.datetime):
 				value = value.strftime('%d%m%Y')
+			if isinstance(value, User) and value.first_name:
+				value = value.first_name + " " + value.last_name
 			data_row.append(value)
 		all_orders.append(data_row)
 	# make user sheet
