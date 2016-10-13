@@ -16,14 +16,6 @@ class OrderAddMenuItemForm(forms.Form):
         cd = self.cleaned_data
         if cd['date'] < datetime.date.today():
             raise forms.ValidationError("The date cannot be in the past.")
-        # Cut off orders after 2:30pm
-        if (cd['date'] == datetime.date.today() and
-            datetime.datetime.now().hour >= 14 and
-            datetime.datetime.now().minute >= 30):
-                raise forms.ValidationError("The orders have already been sent today.")
-        # Don't allow orders on weekends
-        if (cd['date'].weekday() > 3):
-            raise forms.ValidationError("You can only order for Monday to Thursday.")
         return cd['date']
 
 
