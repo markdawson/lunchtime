@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class OrderItem(models.Model):
 	user = models.ForeignKey(User, related_name='orders')
 	menu_item = models.ForeignKey(MenuItem, related_name='menu_items', null=True, on_delete=models.SET_NULL)
-	price = models.PositiveIntegerField()
+	price = models.DecimalField(max_digits=5, decimal_places=2)
 	quantity = models.PositiveIntegerField()
 	date = models.DateField()
 	comments = models.CharField(verbose_name='Comments for vendor', max_length=200, default='')

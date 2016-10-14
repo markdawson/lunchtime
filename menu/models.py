@@ -22,7 +22,7 @@ class MenuItem(models.Model):
 	slug = models.SlugField(max_length=200, db_index=True, unique=True)
 	category = models.ForeignKey(Category,
 						related_name='menu_items')
-	price = models.PositiveIntegerField()
+	price = models.DecimalField(max_digits=5, decimal_places=2)
 	available = models.BooleanField(default = True)
 
 	class Meta:
