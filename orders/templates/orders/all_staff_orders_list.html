@@ -30,9 +30,11 @@
 							{% csrf_token %}
 							<input class="blue" type="submit" value="Show dates">
 						</td>
+						{% if False %}
 						<td>
 							<input class="blue" type="submit" name="Send email to vendors" value="Send email to vendors">
 						</td>
+						{% end if %}
 				</tr>
 			</table>
 		</div>
