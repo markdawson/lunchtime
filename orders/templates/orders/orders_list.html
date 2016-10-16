@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-	{{ request.user.first_name}}&#39;s {{ title_message }}
+	{% if request.user.first_name %}{{ request.user.first_name}}&#39;s {% endif %}{{ title_message }}
 {% endblock %}
 
 {% block content %}
